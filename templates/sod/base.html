@@ -1,0 +1,60 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Escord СОД</title>
+    <!-- Compiled and minified CSS -->
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+    <!-- Compiled and minified JavaScript -->
+    <script src="{% static 'app/js/materialize.js' %}"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body>
+<header>
+    <nav>
+        <div class="nav-wrapper blue lighten-2">
+            <a href="#" class="brand-logo">Эскорт.СОД</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{% url 'app:index' %}">Портал</a></li>
+                <li><a href="{% url 'sod:index' %}">СОД</a></li>
+                <li><a href="badges.html">СКР</a></li>
+                <li><a href="collapsible.html">Карта мира</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<ul id="slide-out" class="side-nav fixed">
+    <li>
+        <div class="user-view">
+            <div class="background">
+                <img src="{% static 'app/images/office.jpg' %}">
+            </div>
+            <a href="#!user"><img class="circle" src="{% static 'app/images/yuna.jpg' %}"></a>
+            <a href="#!name"><span class="white-text name">Илья Братухин</span></a>
+            <a href="#!email"><span class="white-text email">Системный администратор</span></a>
+        </div>
+    </li>
+    {% block left_menu_block %}
+        <li><a class="waves-effect" href="{% url 'sod:add_module' %}"><i class="material-icons">add</i>Добавить модуль</a></li>
+        <li><a class="waves-effect" href="{% url 'sod:add_files' %}"><i class="material-icons">insert_drive_file</i>Добавить файлы</a></li>
+        <li><a class="waves-effect" href="{% url 'sod:run_module' %}"><i class="material-icons">play_arrow</i>Выполнить модуль</a></li>
+    {% endblock %}
+
+</ul>
+<main>
+    {% block body_block %}
+    {% endblock %}
+</main>
+<footer>
+
+</footer>
+</body>
+<script src="{% static 'app/js/script.js' %}"></script>
+</html>
