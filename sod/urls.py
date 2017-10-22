@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'add_module/$', views.add_module, name='add_module'),
     url(r'add_files/$', views.add_files, name='add_files'),
     url(r'run_module/$', views.run_module, name='run_module'),
+    url(r'all_modules/$', views.all_modules, name='all_modules'),
     url(r'$', views.index, name='index'),
 ]

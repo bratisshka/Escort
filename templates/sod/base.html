@@ -11,6 +11,7 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'sod/css/style_sod.css' %}">
     <!-- Compiled and minified JavaScript -->
     <script src="{% static 'app/js/materialize.js' %}"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -42,9 +43,14 @@
         </div>
     </li>
     {% block left_menu_block %}
-        <li><a class="waves-effect" href="{% url 'sod:add_module' %}"><i class="material-icons">add</i>Добавить модуль</a></li>
-        <li><a class="waves-effect" href="{% url 'sod:add_files' %}"><i class="material-icons">insert_drive_file</i>Добавить файлы</a></li>
-        <li><a class="waves-effect" href="{% url 'sod:run_module' %}"><i class="material-icons">play_arrow</i>Выполнить модуль</a></li>
+        <li><a class="waves-effect" href="{% url 'sod:add_module' %}"><i class="material-icons">add</i>Добавить
+            модуль</a></li>
+        <li><a class="waves-effect" href="{% url 'sod:add_files' %}"><i class="material-icons">insert_drive_file</i>Добавить
+            файлы</a></li>
+        <li><a class="waves-effect" href="{% url 'sod:run_module' %}"><i class="material-icons">play_arrow</i>Выполнить
+            модуль</a></li>
+        <li><a class="waves-effect" href="{% url 'sod:all_modules' %}"><i class="material-icons">view_list</i>Список
+            модулей</a></li>
     {% endblock %}
 
 </ul>

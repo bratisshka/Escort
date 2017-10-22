@@ -1,7 +1,10 @@
 from django.shortcuts import render
-
+from sod.forms import ModuleForm, FileForm
 
 # Create your views here.
+from sod.models import Module
+
+
 def index(request):
     return render(request, 'sod/index.html')
 
@@ -19,12 +22,24 @@ def exe(request):
 
 
 def add_module(request):
-    return render(request, 'sod/add_module.html')
+    if request.method == 'POST':
+        form = ModuleForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        print('Done')
+    form = ModuleForm()
+    return render(request, 'sod/add_module.html', {'form': form})
 
 
 def add_files(request):
-    return render(request, 'sod/add_files.html')
+    # if request.method == 'POST':
+    #     form = FileForm(request.POST, request.FILES)
 
+    return render(request, 'sod/add_files.html')
 
 def run_module(request):
     return render(request, 'sod/run_module.html')
+
+def all_modules(request):
+    modules = Module.objects.all()
+    return render(request, 'sod/all_modules.html', {'modules': modules})
