@@ -1,0 +1,44 @@
+{% extends 'sod/base.html' %}
+{% block body_block %}
+    <div class="container">
+        <h3>Добавить файлы для обработки</h3>
+        <form action="{% url 'sod:add_files' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="input-field col s6">
+                    {{ form.purpose }}
+                    <label>Тип файла</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    {{ form.modules }}
+                    <label>Тип модуля</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="file-field input-field col s6">
+                    <div class="btn blue">
+                        <span>Файл</span>
+                        {{ form.file }}
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    {{ form.description }}
+                    <label for="textarea1">Описание</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <button class="btn waves-effect waves-light blue" type="submit">Добавить
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+        </form>
+{% endblock %}
