@@ -31,16 +31,21 @@ class Module(models.Model):
     )
     SUPPORTED_EXTENSIONS = (MAT, PY, EXE)
 
-    name = models.CharField(max_length=200, unique=True)
-    extension = models.CharField(max_length=10, choices=EXTENSION_CHOICES)
-    purpose = models.CharField(max_length=100, choices=File.PURPOSE_CHOICES)
+    name = models.CharField(max_length=200, unique=True, verbose_name="Имя модуля")
+    extension = models.CharField(max_length=10, choices=EXTENSION_CHOICES, verbose_name="Расширение")
+    purpose = models.CharField(max_length=100, choices=File.PURPOSE_CHOICES, verbose_name="Тип входящих файлов")
     directory_name = models.CharField(blank=True, max_length=200)
-    description = models.TextField()
-    periodic = models.IntegerField(default=60)
-    timeout = models.IntegerField(default=10)
-    state = models.CharField(max_length=20, choices=STATE_CHOICES, default=STOPPED)
-    sended_files = models.IntegerField(default=0)
-    output_modules = models.ManyToManyField(to="self", blank=True)
+    description = models.TextField(verbose_name="Описание")
+    periodic = models.IntegerField(default=60, verbose_name="Периодичность")
+    timeout = models.IntegerField(default=10, verbose_name="Таймаут")
+    state = models.CharField(max_length=20, choices=STATE_CHOICES, default=STOPPED, verbose_name="Состояние")
+    sended_files = models.IntegerField(default=0, verbose_name="Количество посланных файлов")
+    output_modules = models.ManyToManyField(to="self",
+                                            symmetrical=False,
+                                            through='Dependancy',
+                                            through_fields=('input_module', 'output_module'),
+                                            blank=True,
+                                            related_name='input_modules')
 
     def make_module_directory(self, files):  # Возможно добавление логики замены модуля
         """
@@ -86,3 +91,8 @@ class Module(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Dependancy(models.Model):
+    input_module = models.ForeignKey(Module, related_name='+')
+    output_module = models.ForeignKey(Module, related_name='+')

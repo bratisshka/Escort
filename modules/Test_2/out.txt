@@ -48,3 +48,27 @@ top kek
 top kek
 ---------- MODULE STARTED  ----------
 ---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Данные из выхода первого модуля: 84
+top kek
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Данные из выхода первого модуля: 86
+top kek
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Данные из выхода первого модуля: 88
+top kek
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------

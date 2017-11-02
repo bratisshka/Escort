@@ -76,3 +76,39 @@ Traceback (most recent call last):
 NameError: name 'werwerwerw' is not defined
 ---------- MODULE STARTED  ----------
 ---------- MODULE FINISHED ----------
+Traceback (most recent call last):
+  File "/Users/ilya/Documents/PycharmProjects/Escort/modules/Default Module/start.py", line 1, in <module>
+    werwerwerw
+NameError: name 'werwerwerw' is not defined
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Traceback (most recent call last):
+  File "/Users/ilya/Documents/PycharmProjects/Escort/modules/Default Module/start.py", line 1, in <module>
+    werwerwerw
+NameError: name 'werwerwerw' is not defined
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Traceback (most recent call last):
+  File "/Users/ilya/Documents/PycharmProjects/Escort/modules/Default Module/start.py", line 1, in <module>
+    werwerwerw
+NameError: name 'werwerwerw' is not defined
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Traceback (most recent call last):
+  File "/Users/ilya/Documents/PycharmProjects/Escort/modules/Default Module/start.py", line 1, in <module>
+    werwerwerw
+NameError: name 'werwerwerw' is not defined
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Traceback (most recent call last):
+  File "/Users/ilya/Documents/PycharmProjects/Escort/modules/Default Module/start.py", line 1, in <module>
+    werwerwerw
+NameError: name 'werwerwerw' is not defined
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Traceback (most recent call last):
+  File "/Users/ilya/Documents/PycharmProjects/Escort/modules/Default Module/start.py", line 1, in <module>
+    werwerwerw
+NameError: name 'werwerwerw' is not defined
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------

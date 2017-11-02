@@ -40,3 +40,24 @@
 ---------- MODULE FINISHED ----------
 ---------- MODULE STARTED  ----------
 ---------- MODULE FINISHED ----------
+Данные из выхода второго модуля: 83
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Данные из выхода второго модуля: 85
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Данные из выхода второго модуля: 87
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------

@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.generic import DetailView
+
 from .forms import ModuleForm, FileForm
 
 # Create your views here.
@@ -46,3 +48,9 @@ def run_module(request):
 def all_modules(request):
     modules = Module.objects.all()
     return render(request, 'sod/all_modules.html', {'modules': modules})
+
+
+class ModuleView(DetailView):
+    model = Module
+    template_name = 'sod/module_detail.html'
+    context_object_name = 'module'

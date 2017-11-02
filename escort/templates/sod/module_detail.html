@@ -1,0 +1,59 @@
+{% extends 'sod/base.html' %}
+{% block body_block %}
+    <div class="body-container">
+        <h3>{{ module.name }}</h3>
+        <table class="striped">
+            <tbody>
+            <tr>
+                <th>Имя</th>
+                <th>{{ module.name }}</th>
+            </tr>
+            <tr>
+                <th>Расширение</th>
+                <th>{{ module.get_extension_display }}</th>
+            </tr>
+            <tr>
+                <th>Целевое назначение</th>
+                <th>{{ module.get_purpose_display }}</th>
+            </tr>
+            <tr>
+                <th>Описание</th>
+                <th>{{ module.description }}</th>
+            </tr>
+            <tr>
+                <th>Периодичность</th>
+                <th>{{ module.periodic }} секунд</th>
+            </tr>
+            <tr>
+                <th>Время до таймаута</th>
+                <th>{{ module.timeout }} секунд</th>
+            </tr>
+            <tr>
+                <th>Состояние</th>
+                <th>{{ module.get_state_display }}</th>
+            </tr>
+            <tr>
+                <th>Количество посланных файлов</th>
+                <th>{{ module.sended_files }}</th>
+            </tr>
+            <tr>
+                <th>Входящие модули</th>
+                <th>
+                    {% for input_module in module.input_modules.all %}
+                        <p>{{ input_module.name }}</p>
+                    {% endfor %}
+                </th>
+            </tr>
+            <tr>
+                <th>Модули вывода</th>
+                <th>
+                    {% for out_module in module.output_modules.all %}
+                        <p>{{ out_module.name }}</p>
+                    {% endfor %}
+                </th>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

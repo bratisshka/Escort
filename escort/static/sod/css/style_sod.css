@@ -42,6 +42,6 @@ tbody th{
 ul:not(.browser-default)>li {
     display: inline;
 }
-.table-container {
+.body-container {
     margin: 20px;
 }

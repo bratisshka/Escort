@@ -22,5 +22,5 @@ from config import settings
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^sod/', include('escort.sod.urls')),
-    url(r'^app/', include('escort.app.urls'))
+    url(r'^', include('escort.app.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

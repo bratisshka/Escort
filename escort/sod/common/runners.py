@@ -1,3 +1,4 @@
+import shutil
 import subprocess
 import os
 import threading
@@ -6,11 +7,18 @@ from subprocess import TimeoutExpired
 
 def run_python(base_dir, timeout):
     out_file = open(os.path.join(base_dir, "out.txt"), 'ab')
+    # Копируем файлы, которые были в прошлом запуске
+    if len(os.listdir(os.path.join(base_dir, 'in'))) > 0:
+        try:
+            shutil.rmtree(os.path.join(base_dir, "in_old"))
+        except FileNotFoundError:
+            pass
+        shutil.copytree(os.path.join(base_dir, 'in'), os.path.join(base_dir, "in_old"))
+
     out_file.write(bytearray("---------- MODULE STARTED  ----------\n", encoding='utf-8'))
     try:
         subprocess.run(["python3", os.path.join(base_dir, 'start.py')],
-                           stdout=out_file, stderr=out_file, cwd=base_dir, timeout=timeout)
-    # TODO добавить историю файлов (in_old)
+                       stdout=out_file, stderr=out_file, cwd=base_dir, timeout=timeout)
     except TimeoutExpired as e:
         out_file.write(bytearray("Process has timed out after {} seconds\n".format(timeout), encoding='utf-8'))
     finally:

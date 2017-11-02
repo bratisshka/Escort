@@ -1,6 +1,6 @@
 {% extends 'sod/base.html' %}
 {% block body_block %}
-    <div class="table-container">
+    <div class="body-container">
         <table class="striped">
             <thead>
             <tr>
@@ -17,7 +17,7 @@
             <tbody>
             {% for module in modules %}
                 <tr>
-                    <th>{{ module.name }}</th>
+                    <th><a href="{% url 'sod:module' pk=module.id %}">{{ module.name }}</a></th>
                     <th>{{ module.extension }}</th>
                     <th>{{ module.purpose }}</th>
                     <th>{{ module.description }}</th>
