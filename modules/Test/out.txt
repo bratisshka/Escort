@@ -1,1 +1,42 @@
-Данные из выхода второго модуля: 39
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+Данные из выхода второго модуля: 71
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+Данные из выхода второго модуля: 73
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+Данные из выхода второго модуля: 75
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+Данные из выхода второго модуля: 77
+---------- MODULE STARTED ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Данные из выхода второго модуля: 79
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+Данные из выхода второго модуля: 81
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------
+---------- MODULE STARTED  ----------
+---------- MODULE FINISHED ----------

@@ -1,14 +1,16 @@
-import django  # For testing
-
-django.setup()
-
 import os
 import threading
 import shutil
-from sod.common.settings import MODULES_DIR, PATH_FOR_MUSIC, PATH_FOR_IMAGES, PATH_FOR_TXT
-from sod.models import Module, File
-from sod.common.runners import run_python, run_exe
-from sod.common.settings import TIME_TO_SEND_FILES
+
+import django  # For testing
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+django.setup()
+
+from escort.sod.common.settings import MODULES_DIR, PATH_FOR_MUSIC, PATH_FOR_IMAGES, PATH_FOR_TXT
+from escort.sod.models import Module, File
+from escort.sod.common.runners import run_python, run_exe
+from escort.sod.common.settings import TIME_TO_SEND_FILES
 
 PURPOSE_MAP = {
     File.TEXT: PATH_FOR_TXT,
@@ -16,10 +18,6 @@ PURPOSE_MAP = {
     File.IMAGE: PATH_FOR_IMAGES,
     File.CRYPTO: PATH_FOR_TXT
 }
-
-
-def get_module_map(modules_path):
-    return {file: os.path.abspath(os.path.join(modules_path, file)) for file in os.listdir(modules_path)}
 
 
 def copytree(src, dst, symlinks=False, ignore=None):
@@ -33,8 +31,11 @@ def copytree(src, dst, symlinks=False, ignore=None):
 
 
 def clean_directory(path_to_module):
-    shutil.rmtree(path_to_module)
-    os.mkdir(path_to_module)
+    try:
+        shutil.rmtree(path_to_module)
+        os.mkdir(path_to_module)
+    except OSError:
+        print("Неправильная директория {}".format(path_to_module))
 
 
 class ModuleManager:
@@ -46,27 +47,30 @@ class ModuleManager:
         elif mod.extension == 'exe':
             runner = run_exe
         else:
-            runner = lambda x: x  # Ну или исключение вызвать
-        thread = threading.Thread(target=runner, args=(mod.path, mod.timeout))
+            raise FileNotFoundError("Unsupported Extension")
+        thread = threading.Thread(target=runner, args=(str(mod.get_module_directory()), mod.timeout))
         thread.start()
         return thread
 
     @staticmethod
     def clean_input_data(module_id):
         mod = Module.objects.get(pk=module_id)
-        clean_directory(os.path.join(mod.path, 'in'))
+        clean_directory(str(mod.get_module_directory() / 'in'))
 
     @staticmethod
     def clean_output_data(module_id):
         mod = Module.objects.get(pk=module_id)
-        clean_directory(os.path.join(mod.path, 'out'))
+        clean_directory(str(mod.get_module_directory() / 'out'))
 
     @staticmethod
     def send_default_files(modules):
         """ Посылает файлы из входящей папки согласно типу обрабатываемых"""
         for module in modules:
-            input_dir = PURPOSE_MAP[module.purpose]
-            copytree(input_dir, os.path.join(module.path, 'in'))
+            try:
+                input_dir = PURPOSE_MAP[module.purpose]
+                copytree(input_dir, str(module.get_module_directory() / 'in'))
+            except KeyError:
+                print("Значение {} не поддерживается".format(module.purpose))
         for value in PURPOSE_MAP.values():
             clean_directory(value)
 
@@ -79,7 +83,7 @@ class ModuleManager:
                 ModuleManager.send_default_files(module.output_modules.all())
             else:
                 for out_module in module.output_modules.all():
-                    copytree(os.path.join(module.path, 'out/'), os.path.join(out_module.path, 'in/'))
+                    copytree(str(module.get_module_directory() / 'out'), str(out_module.get_module_directory() / 'in'))
                 ModuleManager.clean_output_data(module.id)
 
     @staticmethod

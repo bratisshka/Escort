@@ -16,3 +16,5 @@ DATABASES = {
 STATICFILES_DIRS = (PROJ_DIR / 'static',)
 
 MEDIA_ROOT = PROJ_DIR / 'media'
+
+ALLOWED_HOSTS.extend(['testserver', '127.0.0.1', 'localhost'])

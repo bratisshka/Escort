@@ -1,7 +1,7 @@
 import os
 from time import sleep
 
-from sod.common.settings import *
+from .settings import *
 
 
 def move_file(filename, path_for):

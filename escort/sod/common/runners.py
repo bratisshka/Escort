@@ -5,14 +5,16 @@ from subprocess import TimeoutExpired
 
 
 def run_python(base_dir, timeout):
-    out_file = open(os.path.join(base_dir, "out.txt"), 'wb')
+    out_file = open(os.path.join(base_dir, "out.txt"), 'ab')
+    out_file.write(bytearray("---------- MODULE STARTED  ----------\n", encoding='utf-8'))
     try:
         subprocess.run(["python3", os.path.join(base_dir, 'start.py')],
                            stdout=out_file, stderr=out_file, cwd=base_dir, timeout=timeout)
     # TODO добавить историю файлов (in_old)
     except TimeoutExpired as e:
-        out_file.write(bytearray("Process has timed out after {} seconds".format(timeout), encoding='utf-8'))
+        out_file.write(bytearray("Process has timed out after {} seconds\n".format(timeout), encoding='utf-8'))
     finally:
+        out_file.write(bytearray("---------- MODULE FINISHED ----------\n", encoding='utf-8'))
         out_file.close()
 
 
