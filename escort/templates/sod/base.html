@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'sod/css/style_sod.css' %}">
-    <!-- Compiled and minified JavaScript -->
-    <script src="{% static 'app/js/materialize.js' %}"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </head>
@@ -51,16 +49,19 @@
             модуль</a></li>
         <li><a class="waves-effect" href="{% url 'sod:all_modules' %}"><i class="material-icons">view_list</i>Список
             модулей</a></li>
-    {% endblock %}
+    {% endblock left_menu_block %}
 
 </ul>
 <main>
     {% block body_block %}
-    {% endblock %}
+    {% endblock body_block %}
 </main>
+{% block modals %}
+{% endblock modals %}
 <footer>
 
 </footer>
 </body>
-<script src="{% static 'app/js/script.js' %}"></script>
+<script src="{% static 'core/js/materialize.js' %}"></script>
+<script src="{% static 'sod/js/script.js' %}"></script>
 </html>

@@ -3,6 +3,8 @@ import os
 from django.db import models
 from pathlib import Path
 
+from django.urls import reverse
+
 from config.settings import MODULES_DIR
 
 
@@ -46,6 +48,9 @@ class Module(models.Model):
                                             through_fields=('input_module', 'output_module'),
                                             blank=True,
                                             related_name='input_modules')
+
+    def get_absolute_url(self):
+        return reverse('sod:module', args=(self.id,))
 
     def make_module_directory(self, files):  # Возможно добавление логики замены модуля
         """

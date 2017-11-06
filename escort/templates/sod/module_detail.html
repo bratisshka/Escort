@@ -55,5 +55,41 @@
 
             </tbody>
         </table>
+        <div class="row">
+            <a class="btn waves-effect red modal-trigger" href="#modal1">Очистить входящую директорию</a>
+            <a class="btn waves-effect суan modal-trigger" href="#modal2">Очистить исходящую директорию</a>
+        </div>
+        <div class="row">
+            <a class="btn waves-effect суan" href="{% url 'sod:show_dir' module.id %}">Открыть директорию
+                модуля</a>
+            <a class="btn waves-effect суan" href="{% url 'sod:download_output' module.id %}">Выгрузить данные</a>
+        </div>
     </div>
-{% endblock %}
+{% endblock body_block %}
+
+{% block modals %}
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h4>Очистить входящую директорию?</h4>
+            <p>Это действие нельзя отменить.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="clean_input" class="modal-action modal-close waves-effect waves-green btn red"
+               onclick="clean_module_subdir({{ module.id }}, 'input')">Очистить</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Отменить</a>
+        </div>
+    </div>
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <h4>Очистить исходящую директорию?</h4>
+            <p>Это действие нельзя отменить.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="clean_input" class="modal-action modal-close waves-effect waves-green btn red"
+               onclick="clean_module_subdir({{ module.id }}, 'output')">Очистить</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Отменить</a>
+        </div>
+    </div>
+{% endblock modals %}
+

@@ -63,6 +63,13 @@ class ModuleManager:
         clean_directory(str(mod.get_module_directory() / 'out'))
 
     @staticmethod
+    def make_out_archive(module_id):
+        mod = Module.objects.get(pk=module_id)
+        filename = mod.name + '.zip'
+        shutil.make_archive(str(MODULES_DIR / mod.name / mod.name), 'zip', str(mod.get_module_directory() / 'out'))
+        return str(MODULES_DIR / mod.name / filename), filename
+
+    @staticmethod
     def send_default_files(modules):
         """ Посылает файлы из входящей папки согласно типу обрабатываемых"""
         for module in modules:

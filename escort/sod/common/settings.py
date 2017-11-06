@@ -1,3 +1,5 @@
+from config.settings import BASE_DIR
+
 LISTEN_DIR = '/Users/ilya/Documents/for_sod/listen'
 TIME_TO_LISTEN = 60  # once a minute
 
@@ -10,5 +12,5 @@ PATH_FOR_EXE = '/Users/ilya/Documents/for_sod/exe'
 
 IMG_EXTENSIONS = ['jpg', 'bmp', 'png']
 MUSIC_EXTENSIONS = ['wav', 'mp3']
-MODULES_DIR = '/Users/ilya/Documents/PycharmProjects/config/modules'
+MODULES_DIR = BASE_DIR / 'modules'
 TIME_TO_SEND_FILES = 15
