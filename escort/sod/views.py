@@ -1,6 +1,6 @@
 import os
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.views.decorators.http import require_POST
 from django.views.generic import DetailView, View, ListView
@@ -28,10 +28,15 @@ def exe(request):
 
 
 def add_files(request):
-    # if request.method == 'POST':
-    #     form = FileForm(request.POST, request.FILES)
     form = FileForm(request.POST or None, request.FILES or None)
     return render(request, 'sod/add_files.html', {'form': form})
+
+
+class AddFilesToModuleView(View):
+    def post(self, request):
+        form = FileForm(request.POST, request.FILES)
+        form.save()
+        return JsonResponse({"success": True})
 
 
 class AddModuleView(View):
@@ -106,3 +111,7 @@ class ModuleView(DetailView):
     model = Module
     template_name = 'sod/module_detail.html'
     context_object_name = 'module'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

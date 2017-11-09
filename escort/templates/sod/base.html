@@ -5,14 +5,14 @@
     <meta charset="UTF-8">
     <title>Escord СОД</title>
     <!-- Compiled and minified CSS -->
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'sod/css/style_sod.css' %}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% block stylesheets %}
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+        <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'sod/css/style_sod.css' %}">
+        <link rel="stylesheet" href="{% static 'sod/css/dropzone.css' %}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    {% endblock stylesheets %}
 
 </head>
 <body>
@@ -62,6 +62,12 @@
 
 </footer>
 </body>
-<script src="{% static 'core/js/materialize.js' %}"></script>
-<script src="{% static 'sod/js/script.js' %}"></script>
+{% block scripts %}
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script src="{% static 'core/js/materialize.js' %}"></script>
+    <script src="{% static 'sod/js/script.js' %}"></script>
+{% endblock scripts %}
 </html>

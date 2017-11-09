@@ -53,6 +53,15 @@ class ModuleForm(forms.Form):
 
 
 class FileForm(forms.Form):
-    purpose = forms.ChoiceField(File.PURPOSE_CHOICES, label="Тип файла(ов)")
-    modules = forms.ChoiceField(Module.objects.values_list('id', 'name'), widget=forms.SelectMultiple())
+    # purpose = forms.ChoiceField(File.PURPOSE_CHOICES, label="Тип файла(ов)")
+    module = forms.ChoiceField(Module.objects.values_list('id', 'name'))
     file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+    def save(self):
+        module_id = self.data.get('module', 1)
+        try:
+            mod = Module.objects.get(pk=module_id)
+            files = self.files.getlist('files')
+            mod.append_to_input(files)
+        except Module.DoesNotExist:
+            self.add_error(field='module', error='Module does not exist')

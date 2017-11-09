@@ -97,6 +97,22 @@ class Module(models.Model):
     def __str__(self):
         return self.name
 
+    #  Я не соблюдаю DRY для того, чтобы можно было их использовать в template
+    @property
+    def len_input(self):
+        return len(os.listdir(str(self.get_module_directory() / 'in')))
+
+    @property
+    def len_output(self):
+        return len(os.listdir(str(self.get_module_directory() / 'out')))
+
+    def append_to_input(self, files):
+        input_dir = str(self.get_module_directory() / 'in')
+        for file in files:
+            with open(os.path.join(input_dir, str(file)), 'wb') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
+
 
 class Dependancy(models.Model):
     input_module = models.ForeignKey(Module, related_name='+')
