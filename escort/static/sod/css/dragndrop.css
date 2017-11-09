@@ -158,3 +158,6 @@
 .box__button:focus {
     background-color: #0f3c4b;
 }
+.drag-container {
+    text-align: center;
+}

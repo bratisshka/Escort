@@ -55,10 +55,11 @@ class AddModuleView(View):
         return render(request, self.template_name, {'form': form})
 
 
-def run_module(request, module_id):
-    module = get_object_or_404(Module, pk=module_id)
-    ModuleManager.run_module(module.id)
-    return render(request, 'sod/run_module.html')
+def run_module(request, pk):
+    module = get_object_or_404(Module, pk=pk)
+    if module.state == module.STOPPED:
+        ModuleManager.run_module(module.id)
+    return redirect(module.get_absolute_url())
 
 
 # @login_required

@@ -3,6 +3,7 @@ import threading
 import shutil
 
 import django  # For testing
+from multiprocessing import Process
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
@@ -48,9 +49,11 @@ class ModuleManager:
             runner = run_exe
         else:
             raise FileNotFoundError("Unsupported Extension")
-        thread = threading.Thread(target=runner, args=(str(mod.get_module_directory()), mod.timeout))
-        thread.start()
-        return thread
+        # thread = threading.Thread(target=runner, args=(str(mod.get_module_directory()), mod.timeout))
+        # thread.start()
+        p = Process(target=runner, args=(str(mod.get_module_directory()), mod.timeout))
+        p.start()
+        return p
 
     @staticmethod
     def clean_input_data(module_id):

@@ -10,7 +10,6 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
         <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
         <link rel="stylesheet" href="{% static 'sod/css/style_sod.css' %}">
-        <link rel="stylesheet" href="{% static 'sod/css/dropzone.css' %}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     {% endblock stylesheets %}
 
@@ -45,8 +44,8 @@
             модуль</a></li>
         <li><a class="waves-effect" href="{% url 'sod:add_files' %}"><i class="material-icons">insert_drive_file</i>Добавить
             файлы</a></li>
-        <li><a class="waves-effect" href="{% url 'sod:run_module' %}"><i class="material-icons">play_arrow</i>Выполнить
-            модуль</a></li>
+{#        <li><a class="waves-effect" href="{% url 'sod:run_module' %}"><i class="material-icons">play_arrow</i>Выполнить#}
+{#            модуль</a></li>#}
         <li><a class="waves-effect" href="{% url 'sod:all_modules' %}"><i class="material-icons">view_list</i>Список
             модулей</a></li>
     {% endblock left_menu_block %}

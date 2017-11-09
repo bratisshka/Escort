@@ -106,6 +106,10 @@ class Module(models.Model):
     def len_output(self):
         return len(os.listdir(str(self.get_module_directory() / 'out')))
 
+    @property
+    def running(self):
+        return self.state == self.RUNNING
+
     def append_to_input(self, files):
         input_dir = str(self.get_module_directory() / 'in')
         for file in files:
