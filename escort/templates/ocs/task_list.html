@@ -1,0 +1,56 @@
+{% extends 'ocs/base.html' %}
+{% load staticfiles %}
+{% load ocs_extras %}
+
+{% block breadcrumb_block %}
+<a class="breadcrumb">Список задач</a>
+{% endblock breadcrumb_block %}
+
+{% block body_block %}
+<div class="container">
+    <ul class="collapsible" data-collapsible="accordion">
+        {% if tasks %}
+        {% for task in tasks %}
+        <li>
+            <div class="collapsible-header">
+                {% if task.finish_rate == 100 %}
+                <i class="material-icons">check</i>
+                {% elif task.finish_rate == 99 %}
+                <i class="material-icons">access_time</i>
+                {% else %}
+                <i class="material-icons">cached</i>
+                {% endif %}
+                {{ task.name }}
+                {% if task.finish_rate == 100 %}
+                (выполнено)
+                {% elif task.finish_rate == 99 %}
+                (ожидает подтверждения)
+                {% else %}
+                ({{ task.finish_rate }}%)
+                {% endif %}
+                <span class="badge">
+                    <a href="/ocs/show_task/{{ task.id }}/" title="Подробнее"><i
+                            class="material-icons">import_contacts</i></a>
+                    {% if request.user|has_group:"Admins" %}
+                    <a href="/ocs/edit_task/{{ task.id }}/" title="Редактировать задачу"><i class="material-icons">border_color</i></a>
+                    <a href="collapsible.html" title="Удалить задачу"><i class="material-icons">delete_forever</i></a>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="collapsible-body">
+                <span>
+                     <a href="/ocs/show_task/{{ task.id }}/" class="black-text">{{ task.description }}</a>
+                </span>
+            </div>
+        </li>
+        {% endfor %}
+        {% else %}
+        <a href="#!" class="collection-item">На данный момент в системе нет задач</a>
+        {% endif %}
+    </ul>
+    <a href="{% url 'ocs:add_task' %}" class="btn-floating btn-large waves-effect red lighten-2 black-text"
+       title="Добавить задачу">
+        <i class="material-icons">add</i>
+    </a>
+</div>
+{% endblock body_block %}

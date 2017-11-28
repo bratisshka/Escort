@@ -1,4 +1,7 @@
 {% extends 'sod/base.html' %}
+{% block breadcrumb_block %}
+    <a class="breadcrumb">Добавление файлов</a>
+{% endblock %}
 {% block body_block %}
     <div class="container">
         <h3>Добавить файлы для обработки</h3>
@@ -6,31 +9,19 @@
             {% csrf_token %}
             <div class="row">
                 <div class="input-field col s6">
-                    {{ form.purpose }}
-                    <label>Тип файла</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    {{ form.modules }}
-                    <label>Тип модуля</label>
+                    {{ form.module }}
+                    <label>Модуль</label>
                 </div>
             </div>
             <div class="row">
                 <div class="file-field input-field col s6">
                     <div class="btn blue">
                         <span>Файл</span>
-                        {{ form.file }}
+                        {{ form.file_field }}
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    {{ form.description }}
-                    <label for="textarea1">Описание</label>
                 </div>
             </div>
             <div class="row">

@@ -30,9 +30,6 @@
 .input-field .prefix.active {
     color: #2196f3;
 }
-.brand-logo {
-    margin-left: 20px;
-}
 tbody th{
     font-weight: 300;
 }
@@ -44,4 +41,12 @@ ul:not(.browser-default)>li {
 }
 .body-container {
     margin: 20px;
+}
+.manage-btn {
+    min-width: 280px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.href {
+    cursor: pointer;
 }

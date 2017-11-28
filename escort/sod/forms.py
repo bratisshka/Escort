@@ -13,8 +13,6 @@ class ModuleForm(forms.Form):
     file = forms.FileField(widget=forms.ClearableFileInput(attrs={"multiple": True}))
     description = forms.CharField(widget=forms.Textarea(attrs={'class': 'materialize-textarea'}))
 
-    # TODO Reformat code: add validators to field (Chapter 11)
-
     def save(self):
         mod = Module(name=self.data['name'],
                      purpose=self.data['purpose'],
@@ -53,15 +51,19 @@ class ModuleForm(forms.Form):
 
 
 class FileForm(forms.Form):
-    # purpose = forms.ChoiceField(File.PURPOSE_CHOICES, label="Тип файла(ов)")
-    module = forms.ChoiceField(Module.objects.values_list('id', 'name'))
-    file = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    module_choices = list(Module.objects.filter(is_service=False).values_list('id', 'name'))
+    module_choices.append((0, "Входящий поток"))
+    module = forms.ChoiceField(choices=module_choices, initial=0)
+    file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
     def save(self):
-        module_id = self.data.get('module', 1)
+        module_id = self.data.get('module', 0)
+        if module_id == 0:
+            pass
+            # TODO вызвать распределяющий модуль
         try:
             mod = Module.objects.get(pk=module_id)
-            files = self.files.getlist('files')
+            files = self.files.getlist('file_field')
             mod.append_to_input(files)
         except Module.DoesNotExist:
             self.add_error(field='module', error='Module does not exist')

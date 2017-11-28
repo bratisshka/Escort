@@ -1,0 +1,35 @@
+{% extends 'ocs/base.html' %}
+{% load staticfiles %}
+
+{% block breadcrumb_block %}
+<a href="#!" class="breadcrumb">Регистрация пользователя</a>
+{% endblock breadcrumb_block %}
+
+{% block body_block %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card  blue-grey lighten-5">
+                <div class="card-content black-text">
+                    <span class="card-title">Регистрация нового пользователя</span>
+                    <div class="row">
+                        <form class="col s12" id="signup" method="post" action="/ocs/signup/">
+                            {% csrf_token %}
+                            {{ user_form.as_p }}
+                            {{ group_form.as_p }}
+                            <div class="card-action">
+                                <button class="btn waves-effect yellow lighten-3 black-text" type="submit"
+                                        name="submit">
+                                    Зарегистрировать
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock body_block %}

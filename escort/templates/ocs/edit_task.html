@@ -1,0 +1,75 @@
+{% extends 'ocs/base.html' %}
+{% load staticfiles %}
+
+{% block breadcrumb_block %}
+<a href="#!" class="breadcrumb">Список задач</a>
+<a href="#!" class="breadcrumb">Редактирование</a>
+{% endblock breadcrumb_block %}
+
+{% block body_block %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card  blue-grey lighten-4">
+                <div class="card-content black-text">
+                    <span class="card-title">Редактирокание задачи</span>
+
+                    <div class="row">
+                        <form class="col s12" id="task_form" method="post" action="/ocs/add_task/">
+                            {% csrf_token %}
+                            {% for hidden in form.hidden_fields %}
+                            {{ hidden }}
+                            {% endfor %}
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">font_download</i>
+                                    <!--<input id="name" type="text" class="validate">-->
+                                    {{form.name}}
+                                    <label for='{{form.name}}'>Заголовок задачи</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">assignment</i>
+                                    <!--<textarea id="description" class="materialize-textarea"></textarea>-->
+                                    {{form.description}}
+                                    <label for='{{form.description}}'>Описание задачи</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">event_available</i>
+                                    <!--<input id="start_date" type="text" class="datepicker">-->
+                                    {{form.start_date}}
+                                    <label for='{{form.start_date}}'>Дата поступления задачи (дд.мм.гг)</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">event_busy</i>
+                                    <!--<input id="deadline_date" type="text" class="datepicker">-->
+                                    {{form.deadline_date}}
+                                    <label for='{{form.deadline_date}}'>Срок выполнения задачи (дд.мм.гг)</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">person</i>
+                                    <!--<input id="responsible">-->
+                                    {{form.responsible}}
+                                    <label for='{{form.responsible}}'>Ответсвенный</label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <a class="waves-effect yellow lighten-3 black-text btn"><i class="material-icons right">add</i>Добавить подзадачу</a>
+                </div>
+                <div class="card-action">
+                    <button class="btn waves-effect yellow lighten-3 black-text" type="submit" name="submit">
+                        Добавить задачу
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body_block %}

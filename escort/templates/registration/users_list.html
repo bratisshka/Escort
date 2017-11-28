@@ -1,0 +1,37 @@
+{% extends 'ocs/base.html' %}
+{% load staticfiles %}
+
+{% block breadcrumb_block %}
+<a href="#!" class="breadcrumb">Администирирование</a>
+<a href="#!" class="breadcrumb">Список пользователей</a>
+{% endblock breadcrumb_block %}
+
+{% block body_block %}
+<div class="container">
+    <ul class="collapsible" data-collapsible="accordion">
+        {% if users %}
+        {% for user in users %}
+        <li>
+            <div class="collapsible-header">
+                {{ user.last_name }} {{ user.first_name }}
+                <span class="badge">
+                    <a href="/ocs/adm_profile_control/{{ user.id }}" title="Редактировать профиль"><i class="material-icons">border_color</i></a>
+                    <a href="/ocs/del_user/{{ user.id }}" title="Удалить пользователя"><i class="material-icons">delete_forever</i></a>
+                </span>
+            </div>
+            <div class="collapsible-body">
+                <span>
+                     Инфорормация о пользователе
+                </span>
+            </div>
+        </li>
+        {% endfor %}
+        {% else %}
+        <a href="#!" class="collection-item">Список пользователей пуст</a>
+        {% endif %}
+    </ul>
+    <a href="{% url 'ocs:signup' %}" class="btn-floating btn-large waves-effect red lighten-2 black-text" title="Добавить пользователя">
+        <i class="material-icons">add</i>
+    </a>
+</div>
+{% endblock body_block %}

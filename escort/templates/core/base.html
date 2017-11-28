@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+{% load ocs_extras %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Escord СКР</title>
+    <link rel="stylesheet" href="{% static 'core/css/materialize.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/material_icons.css' %}">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'sod/css/style_sod.css' %}">
+    {% endblock stylesheets %}
+</head>
+<body>
+<header>
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper red lighten-2">
+                <a href="{% url 'app:index' %}" class="brand-logo left">
+                    <img src="{% static 'ocs/images/long_logo_colour.png' %}" width="300"
+                         height="64" alt="materialize logo" href="{% url 'app:index' %}">
+                </a>
+                <div class="navbar-content">
+
+                    {% block head_breadcrumb %}
+                        <a href="{% url 'sod:index' %}" class="breadcrumb" id="first">Система обработки данных</a>
+                    {% endblock head_breadcrumb %}
+
+                    {% block breadcrumb_block %}
+                    {% endblock breadcrumb_block %}
+
+                    <ul class="right hide-on-med-and-down">
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a href="{% url 'auth_logout' %}?next=/ocs/"
+                                   class="waves-effect yellow lighten-3 black-text btn">
+                                    <i class="material-icons right">exit_to_app</i>Выйти из системы</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="{% url 'auth_login' %}"
+                                   class="waves-effect yellow lighten-3 black-text btn">Войти</a>
+                            </li>
+                        {% endif %}
+                        </li>
+                    </ul>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="{% url 'app:index' %}">Портал</a></li>
+                        <li><a href="{% url 'sod:index' %}">СОД</a></li>
+                        <li><a href="{% url 'ocs:index' %}">СКР</a></li>
+                        <li><a href="#">Карта мира</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<ul class="side-nav fixed">
+    <li>
+        {#        <img src="{% static 'ocs/images/long_logo_colour.png' %}" width="300" height="64" alt="materialize logo">#}
+        <div class="user-view">
+            <div class="background">
+                <img src="{% static 'ocs/images/12.png' %}">
+            </div>
+            {% if user.is_authenticated %}
+                <img class="circle" src="{% static 'app/images/cat.jpg' %}">
+                <span class="white-text name">{{ user.get_full_name }}</span>
+                {% if request.user|has_group:"Admins" %}
+                    <span class="white-text email">Системный администратор</span>
+                {% else %}
+                    <span class="white-text email">Пользователь</span>
+                {% endif %}
+            {% else %}
+                <span class="white-text email">Для работы в системе необходима</span>
+                <a href="{% url 'auth_login' %}"><span class="white-text email">авторизация</span></a>
+            {% endif %}
+        </div>
+    </li>
+    {% block left_menu_block %}
+    {% endblock left_menu_block %}
+
+</ul>
+
+
+<main>
+    {% block body_block %}
+    {% endblock body_block %}
+</main>
+{% block modals %}
+{% endblock modals %}
+
+<footer>
+
+</footer>
+
+</body>
+<script src="{% static 'core/js/jquery-3.2.1.js' %}"></script>
+<script src="{% static 'core/js/materialize.js' %}"></script>
+{% block scripts %}
+    <script src="{% static 'sod/js/script.js' %}"></script>
+    <script src="{% static 'ocs/js/script.js' %}"></script>
+{% endblock scripts %}
+
+</html>

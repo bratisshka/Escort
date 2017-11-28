@@ -2681,7 +2681,7 @@ if (Vel) {
 
         // Initialize Tabs Content.
         if (options.swipeable) {
-          // TODO: Duplicate calls with swipeable? handle multiple div wrapping.
+          // sTODO: Duplicate calls with swipeable? handle multiple div wrapping.
           $links.each(function () {
             var $curr_content = $(Materialize.escapeHash(this.hash));
             $curr_content.addClass('carousel-item');
@@ -9299,7 +9299,7 @@ if (Vel) {
     init: function (options) {
       var defaults = {
         duration: 200, // ms
-        dist: -100, // zoom scale TODO: make this more intuitive as an option
+        dist: -100, // zoom scale sTODO: make this more intuitive as an option
         shift: 0, // spacing for center image
         padding: 0, // Padding between non center items
         fullWidth: false, // Change to full width styles

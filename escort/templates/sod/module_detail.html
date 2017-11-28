@@ -1,6 +1,8 @@
 {% extends 'sod/base.html' %}
 {% load staticfiles %}
-
+{% block breadcrumb_block %}
+    <a class="breadcrumb">Модуль "{{ module.name }}"</a>
+{% endblock %}
 {% block stylesheets %}
     {{ block.super }}
     <link href="{% static 'sod/css/dragndrop.css' %}" rel="stylesheet">
@@ -13,76 +15,93 @@
 {% block body_block %}
     <div class="body-container">
         <h3>{{ module.name }}</h3>
-        <table class="striped">
-            <tbody>
-            <tr>
-                <th>Имя</th>
-                <th>{{ module.name }}</th>
-            </tr>
-            <tr>
-                <th>Расширение</th>
-                <th>{{ module.get_extension_display }}</th>
-            </tr>
-            <tr>
-                <th>Целевое назначение</th>
-                <th>{{ module.get_purpose_display }}</th>
-            </tr>
-            <tr>
-                <th>Описание</th>
-                <th>{{ module.description }}</th>
-            </tr>
-            <tr>
-                <th>Периодичность</th>
-                <th>{{ module.periodic }} секунд</th>
-            </tr>
-            <tr>
-                <th>Время до таймаута</th>
-                <th>{{ module.timeout }} секунд</th>
-            </tr>
-            <tr>
-                <th>Состояние</th>
-                <th>{{ module.get_state_display }}</th>
-            </tr>
-            <tr>
-                <th>Количество посланных файлов</th>
-                <th>{{ module.sended_files }}</th>
-            </tr>
-            <tr>
-                <th>Количество файлов в 'in'</th>
-                <th>{{ module.len_input }}</th>
-            </tr>
-            <tr>
-                <th>Количество файлов в 'out'</th>
-                <th>{{ module.len_output }}</th>
-            </tr>
-            <tr>
-                <th>Входящие модули</th>
-                <th>
-                    {% for input_module in module.input_modules.all %}
-                        <p>{{ input_module.name }}</p>
-                    {% endfor %}
-                </th>
-            </tr>
-            <tr>
-                <th>Модули вывода</th>
-                <th>
-                    {% for out_module in module.output_modules.all %}
-                        <p>{{ out_module.name }}</p>
-                    {% endfor %}
-                </th>
-            </tr>
+        <div class="row">
+            <div class="col s8">
+                <table class="striped">
+                    <tbody>
+                    <tr>
+                        <th>Имя</th>
+                        <th>{{ module.name }}</th>
+                    </tr>
+                    <tr>
+                        <th>Расширение</th>
+                        <th>{{ module.get_extension_display }}</th>
+                    </tr>
+                    <tr>
+                        <th>Целевое назначение</th>
+                        <th>{{ module.get_purpose_display }}</th>
+                    </tr>
+                    <tr>
+                        <th>Описание</th>
+                        <th>{{ module.description }}</th>
+                    </tr>
+                    <tr>
+                        <th>Периодичность</th>
+                        <th>{{ module.periodic }} секунд</th>
+                    </tr>
+                    <tr>
+                        <th>Время до таймаута</th>
+                        <th>{{ module.timeout }} секунд</th>
+                    </tr>
+                    <tr>
+                        <th>Состояние</th>
+                        <th>{{ module.get_state_display }}</th>
+                    </tr>
+                    <tr>
+                        <th>Количество посланных файлов</th>
+                        <th>{{ module.sended_files }}</th>
+                    </tr>
+                    <tr>
+                        <th>Количество файлов в 'in'</th>
+                        <th>{{ module.len_input }}</th>
+                    </tr>
+                    <tr>
+                        <th>Количество файлов в 'out'</th>
+                        <th>{{ module.len_output }}</th>
+                    </tr>
+                    <tr>
+                        <th>Входящие модули</th>
+                        <th>
+                            {% for input_module in module.input_modules.all %}
+                                <p>{{ input_module.name }}</p>
+                            {% endfor %}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Модули вывода</th>
+                        <th>
+                            {% for out_module in module.output_modules.all %}
+                                <p>{{ out_module.name }}</p>
+                            {% endfor %}
+                        </th>
+                    </tr>
 
-            </tbody>
-        </table>
-        <div class="row">
-            <a class="btn waves-effect red modal-trigger" href="#modal1">Очистить input</a>
-            <a class="btn waves-effect суan modal-trigger" href="#modal2">Очистить output</a>
-            <a class="btn waves-effect суan" href="{% url 'sod:show_dir' module.id %}">Open module directory</a>
-        </div>
-        <div class="row">
-            <a class="btn waves-effect суan modal-trigger" href="#modal3">Загрузить данные</a>
-            <a class="btn waves-effect суan" href="{% url 'sod:download_output' module.id %}">Выгрузить данные</a>
-            <a class="btn waves-effect blue" href="{% url 'sod:run_module' module.id %}">Запустить модуль</a>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col s4">
+                <div class="row"><a class="btn waves-effect manage-btn red modal-trigger" href="#modal1">Очистить
+                    input</a></div>
+                <div class="row"><a class="btn waves-effect manage-btn суan modal-trigger" href="#modal2">Очистить
+                    output</a></div>
+                <div class="row"><a class="btn waves-effect manage-btn суan" href="{% url 'sod:show_dir' module.id %}">Open
+                    module directory</a></div>
+                <div class="row"><a class="btn waves-effect manage-btn суan modal-trigger" href="#modal3">Загрузить
+                    данные</a></div>
+                <div class="row"><a class="btn waves-effect manage-btn суan"
+                                    href="{% url 'sod:download_output' module.id %}">Выгрузить данные</a></div>
+                {% if module.state == module.STOPPED %}
+                    <div class="row"><a class="btn waves-effect manage-btn blue"
+                                        href="{% url 'sod:run_module' module.id %}">Запустить модуль</a></div>
+
+                {% endif %}
+                <div class="row"><a class="btn waves-effect manage-btn blue modal-test"
+                                    href="{% url 'sod:show_out' module.id %}" modal="#modal4">Показать out.txt</a></div>
+                <div class="row"><a class="btn waves-effect manage-btn blue modal-test"
+                                    href="{% url 'sod:show_log' module.id %}" modal="#modal4">Показать лог файл</a>
+                </div>
+                {#            TODO Добавить показ логов в попапе с загрузкой через ajax #}
+            </div>
         </div>
     </div>
 
@@ -127,7 +146,7 @@
                         </svg>
                         {% csrf_token %}
                         <input name="module" value="{{ module.id }}" type="hidden">
-                        <input type="file" name="files" id="file" class="box__file"
+                        <input type="file" name="file_field" id="file" class="box__file"
                                data-multiple-caption="{count} files selected"
                                multiple/>
                         <label for="file"><strong>Выберите файл</strong><span
@@ -143,6 +162,16 @@
                             href="https://css-tricks.com/examples/DragAndDropFileUploading//?"
                             class="box__restart" role="button">Попытайтесь снова</a></div>
             </div>
+        </div>
+    </div>
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <p style="white-space: pre-line" id="out_file"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="clean_input" class="modal-action modal-close waves-effect waves-green btn red"
+               onclick="clean_module_subdir({{ module.id }}, 'input')">Очистить</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Отменить</a>
         </div>
     </div>
 {% endblock modals %}

@@ -29,6 +29,9 @@ def exe(request):
 
 def add_files(request):
     form = FileForm(request.POST or None, request.FILES or None)
+    if request.method == 'POST':
+        form.save()
+        form = FileForm
     return render(request, 'sod/add_files.html', {'form': form})
 
 
@@ -103,9 +106,12 @@ def download_out_zip(request, pk):
 
 
 class AllModulesView(ListView):
-    model = Module
+    # model = Module
     template_name = 'sod/all_modules.html'
     context_object_name = 'modules'
+
+    def get_queryset(self):
+        return Module.objects.filter(is_service=False)
 
 
 class ModuleView(DetailView):
@@ -116,3 +122,15 @@ class ModuleView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+def show_log(request, pk):
+    mod = get_object_or_404(Module, pk=pk)
+    log = mod.show_log_file()
+    return JsonResponse({"data": log})
+
+
+def show_out(request, pk):
+    mod = get_object_or_404(Module, pk=pk)
+    out = mod.show_output_file()
+    return JsonResponse({"data": out})

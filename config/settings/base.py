@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'escort.app',
     'escort.sod',
+    'escort.ocs',
+    'registration',
 ]
 
 MIDDLEWARE = [
@@ -98,3 +100,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
+
+REGISTRATION_OPEN = True
+
+REGISTRATION_AUTO_LOGIN = True
+LOGIN_REDIRECT_URL = '/ocs/'
+LOGIN_URL = '/accounts/login/'

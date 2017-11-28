@@ -89,12 +89,9 @@ class ModuleManager:
         """ Посылает файлы согласно графу выводов модулей """
         modules = Module.objects.all()
         for module in modules:
-            if module.id == 1:  # Default Module
-                ModuleManager.send_default_files(module.output_modules.all())
-            else:
-                for out_module in module.output_modules.all():
-                    copytree(str(module.get_module_directory() / 'out'), str(out_module.get_module_directory() / 'in'))
-                ModuleManager.clean_output_data(module.id)
+            for out_module in module.output_modules.all():
+                copytree(str(module.get_module_directory() / 'out'), str(out_module.get_module_directory() / 'in'))
+            ModuleManager.clean_output_data(module.id)
 
     @staticmethod
     def start():

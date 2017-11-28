@@ -1,7 +1,19 @@
-header, main, footer {
+main, footer {
     padding-left: 300px;
 }
-
+.side-nav.fixed {
+    top: auto; !important;
+}
+.navbar-content {
+    padding-left: 305px;
+}
+.cards .card {
+    max-width: 300px;
+}
+/*.cards .card.with-image {*/
+    /*height: 450px;*/
+    /*width: 350px*/
+/*}*/
 @media only screen and (max-width: 992px) {
     header, main, footer {
         padding-left: 0;

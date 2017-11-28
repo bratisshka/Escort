@@ -1,4 +1,7 @@
 {% extends 'sod/base.html' %}
+{% block breadcrumb_block %}
+    <a class="breadcrumb">Список модулей</a>
+{% endblock %}
 {% block body_block %}
     <div class="body-container">
         <table class="striped">
@@ -11,27 +14,28 @@
                 <th>Периодичность</th>
                 <th>Таймаут</th>
                 <th>Состояние</th>
-                <th>Действия</th>
+                {#                <th>Действия</th>#}
             </tr>
             </thead>
             <tbody>
             {% for module in modules %}
-                <tr>
+                <tr class="href" href="{% url 'sod:module' pk=module.id %}">
                     <th><a href="{% url 'sod:module' pk=module.id %}">{{ module.name }}</a></th>
                     <th>{{ module.extension }}</th>
-                    <th>{{ module.purpose }}</th>
+                    <th>{{ module.get_purpose_display }}</th>
                     <th>{{ module.description }}</th>
                     <th>{{ module.periodic }}</th>
                     <th>{{ module.timeout }}</th>
-                    <th>{{ module.state }}</th>
+                    <th>{{ module.get_state_display }}</th>
 
-                    <th class="last_col">
-                        <ul class="actions_list">
-                            <li><a class="btn-floating green"><i class="material-icons">play_arrow</i></a></li>
-                            <li><a class="btn-floating yellow darken-1"><i class="material-icons">restore</i></a></li>
-                            <li><a class="btn-floating red"><i class="material-icons">remove</i></a></li>
-                        </ul>
-                    </th>
+                    {#                        <th class="last_col">#}
+                    {#                            <ul class="actions_list">#}
+                    {#                                <li><a class="btn-floating green"><i class="material-icons">play_arrow</i></a></li>#}
+                    {#                                <li><a class="btn-floating yellow darken-1"><i class="material-icons">restore</i></a>#}
+                    {#                                </li>#}
+                    {#                                <li><a class="btn-floating red"><i class="material-icons">remove</i></a></li>#}
+                    {#                            </ul>#}
+                    {#                        </th>#}
                 </tr>
             {% endfor %}
             </tbody>

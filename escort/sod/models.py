@@ -48,6 +48,11 @@ class Module(models.Model):
                                             through_fields=('input_module', 'output_module'),
                                             blank=True,
                                             related_name='input_modules')
+    is_service = models.BooleanField(default=False, verbose_name="Служебный?")
+
+    class Meta:
+        verbose_name = "модуль"
+        verbose_name_plural = "модули"
 
     def get_absolute_url(self):
         return reverse('sod:module', args=(self.id,))
@@ -117,7 +122,41 @@ class Module(models.Model):
                 for chunk in file.chunks():
                     destination.write(chunk)
 
+    def show_output_file(self):
+        try:
+            f = open(str(self.get_module_directory() / 'out.txt'), 'r')
+            out = f.read()
+        except FileNotFoundError:
+            out = ""
+        return out
+
+    def show_log_file(self):
+        try:
+            f = open(str(self.get_module_directory() / 'log.txt'), 'r')
+            log = f.read()
+        except FileNotFoundError:
+            log = ""
+        return log
+
 
 class Dependancy(models.Model):
     input_module = models.ForeignKey(Module, related_name='+')
     output_module = models.ForeignKey(Module, related_name='+')
+
+
+    # class ServiceModule(models.Model):
+    #     """
+    #         Служебный модуль.
+    #         Особенности:
+    #          - создается и управляется только из своей админки
+    #          - должен иметь доступ к своим настройкам, либо настраивается сам
+    #          - не имеет родителей, только потоков
+    #          - выполняется отдельно от остальных
+    #         Примеры:
+    #          - модуль, отвечающий за прослушивание и распределение входящих файлов
+    #          - модуль, отвечающий за выкладывание результатов выполнения других модулей на портал
+    #          - модуль, собирающий всю статистику, и генерирующий .pdf документ
+    #
+    #     """
+    #     name = models.CharField(max_length=200, unique=True, verbose_name="Имя модуля")
+    #     description = models.TextField(verbose_name="Описание")

@@ -1,0 +1,59 @@
+{% extends 'app/base.html' %}
+{% block breadcrumb_block %}
+     <a class="breadcrumb" href="{% url 'app:news' %}">Новости</a>
+{% endblock %}
+{% block body_block %}
+    <div class="row">
+        <div class="cards">
+        {% for news in news_list %}
+            {% if news.image %}
+{#                <div class="col s5">#}
+                    <div class="card with-image">
+                        <div class="card-image">
+                            <img src="/media/{{ news.image }}">
+                            <span class="card-title">{{ news.header }}</span>
+                        </div>
+                        <div class="card-content">
+                            <p>{{ news.content }}</p>
+                        </div>
+                        <div class="card-action">
+                            <p>{{ news.date_published }}</p>
+                        </div>
+                    </div>
+{#                </div>#}
+            {% else %}
+{#                <div class="col s4">#}
+                    <div class="card blue-grey darken-1">
+                        <div class="card-content white-text">
+                            <span class="card-title">{{ news.header }}</span>
+                            <p>{{ news.content }}</p>
+                        </div>
+                        <div class="card-action white-text">
+                            <p>{{ news.date_published }}</p>
+                        </div>
+                    </div>
+{#                </div>#}
+            {% endif %}
+            {#        {{ news.header }}#}
+            {#        {{ news.content }}#}
+            {#        <img src="{{ MEDIA_URL }}{{ news.image }}">#}
+        {% endfor %}
+        </div>
+    </div>
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if news_list.has_previous %}
+            <a href="?page={{ news_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ news_list.number }} of {{ news_list.paginator.num_pages }}.
+        </span>
+
+        {% if news_list.has_next %}
+            <a href="?page={{ news_list.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+    </div>
+{% endblock %}

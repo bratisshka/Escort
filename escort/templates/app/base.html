@@ -1,64 +1,23 @@
+{% extends 'core/base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Escord СОД</title>
-    <!-- Compiled and minified CSS -->
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.min.js"
-            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+{% load ocs_extras %}
+{% block stylesheets %}
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
-    <!-- Compiled and minified JavaScript -->
-    <script src="{% static 'core/js/materialize.js' %}"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-</head>
-<body>
-<header>
-    <nav>
-        <div class="nav-wrapper lighten-2">
-            <a href="#" class="brand-logo">Эскорт</a>
-            <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="{% url 'app:index' %}">Портал</a></li>
-                <li><a href="{% url 'sod:index' %}">СОД</a></li>
-                <li><a href="badges.html">СКР</a></li>
-                <li><a href="collapsible.html">Карта мира</a></li>
-            </ul>
-        </div>
-    </nav>
-</header>
-<ul id="slide-out" class="side-nav fixed">
-    <li>
-        <div class="user-view">
-            <div class="background">
-                <img src="{% static 'app/images/office2.jpg' %}">
-            </div>
-            <a href="#!user"><img class="circle" src="{% static 'app/images/yuna.jpg' %}"></a>
-            <a href="#!name"><span class="white-text name">Илья Братухин</span></a>
-            <a href="#!email"><span class="white-text email">Системный администратор</span></a>
-        </div>
-    </li>
-    {% block left_menu_block %}
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-    {% endblock %}
-
-</ul>
-<main>
-    {% block body_block %}
-    {% endblock %}
-</main>
-<footer>
-
-</footer>
-</body>
-<script src="{% static 'app/js/script.js' %}"></script>
-</html>
+{% endblock stylesheets %}
+{% block head_breadcrumb %}
+    <a href="{% url 'app:index' %}" class="breadcrumb">Портал</a>
+{% endblock %}
+{% block left_menu_block %}
+    <li><a href="{% url "app:news" %}"><i class="material-icons">view_list</i>Новости</a></li>
+    <li><a href="{% url "app:documents" %}"><i class="material-icons">insert_drive_file</i>Документы</a></li>
+    <li><a href="{% url "app:tasks" %}"><i class="material-icons">playlist_add_check</i>Активные задачи</a></li>
+    <li><a href="{% url "app:videos" %}"><i class="material-icons">ondemand_video</i>Видеозаписи</a></li>
+    <li><a href="{% url "app:statistics" %}"><i class="material-icons">insert_chart</i>Статистика</a></li>
+    <li><a href="{% url "app:map" %}"><i class="material-icons">map</i>Интерактивная карта</a></li>
+    <li><a href="{% url "app:center" %}"><i class="material-icons">group</i>Аналитический центр</a></li>
+{% endblock %}
+{% block scripts %}
+{#    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>#}
+    <script src="{% static 'app/js/mansory.min.js' %}"></script>
+    <script src="{% static 'app/js/script.js' %}"></script>
+{% endblock %}
