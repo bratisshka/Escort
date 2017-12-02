@@ -23,8 +23,12 @@ class Task(models.Model):
 class SubTask(models.Model):
     name = models.CharField(max_length=2000, verbose_name="Заголовок задачи")
     task = models.ForeignKey(Task, null=True)
-    performer = models.ManyToManyField(User, null=True)
+    performer = models.ManyToManyField(User)
     is_finished = models.BooleanField(default=False)
+
+
+    # role = models.CharField(max_length=100, verbose_name="Должность", default='Пользователь', blank=True)
+
 
 # class Profile(models.Model):
 #     ROLE_LIST = (('AD', 'Admin'), ('US', 'User'), ('LE', 'Leader'))
