@@ -1,0 +1,140 @@
+{% extends 'ocs/base.html' %}
+{% load staticfiles %}
+{% load ocs_extras %}
+
+{% block breadcrumb_block %}
+<a href="{% url 'ocs:task_list' %}" class="breadcrumb">Список задач</a>
+<a class="breadcrumb">Просмотр задачи</a>
+{% endblock breadcrumb_block %}
+
+{% block body_block %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 m12">
+            <div class="card grey lighten-1">
+
+                <div class="card grey lighten-3"> <!--Карта заголовка задачи-->
+                    <div class="card-content black-text">
+                        <span class="card-title">
+                            <h5>
+                                {{ task.name }}
+                                {% if task.finish_rate == 100 %}
+                                (выполнено)
+                                {% elif task.finish_rate == 99 %}
+                                (ожидает подтверждения)
+                                {% elif task.finish_rate == 101 %}
+                                (задача провалена)
+                                {% endif %}
+                            </h5>
+                        </span>
+                        <p>Ответственный: {{ responsible.get_full_name }}</p>
+                        <p>
+                            Процент выполнения:
+                            {% if task.finish_rate == 101 %}
+                                (задача провалена)
+                            {% else %}
+                                {{ task.finish_rate }}%
+                            {% endif %}
+                        </p>
+                        <p>Дата поступления задачи: {{ task.start_date }}</p>
+                        <p>Срок выполнения задачи: {{ task.deadline_date }}</p>
+                    </div>
+                </div>
+
+                <div class="card grey lighten-3"> <!--Карта описания задачи-->
+                    <div class="card-content black-text">
+                        <span class="card-title">{{ task.description }}</span>
+                    </div>
+                </div>
+
+                {% if subtasks %}
+                <div class="card grey lighten-3"> <!--Карта описания задачи-->
+                    <div class="card-content black-text">
+                        <span class="card-title">Подзадачи:</span>
+
+                        {% for subt, perf in subt_user.items %}
+                        <div class="card grey lighten-5"> <!--Карты подзадач-->
+                            <div class="card-content black-text">
+                                <p>{{ subt.name }}</p>
+                                <p></br>Исполнитель: {{ perf.get_full_name }}</p>
+                                {% if subt.is_finished == 1 %}
+                                <p>(выполнено)</p>
+                                {% else %}
+                                <p>(не выполнено)</p>
+                                {% endif %}
+                            </div>
+                            {% if subt.is_finished == 0 %}
+                            <div class="card-action">
+                                {% if user.id == perf.id %}
+                                    <a href="/ocs/subtask_done/{{ subt.id }}"
+                                       class="waves-effect yellow lighten-3 black-text btn">
+                                        Выполнил
+                                    </a>
+                                {% else %}
+                                    <a class="waves-effect yellow lighten-3 black-text btn disabled">
+                                        Выполнил
+                                    </a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if subtasks %}
+                <!--If task has subtasks-->
+                    <!--Check-->
+                    <div class="card-action">
+                    {% if user.id == task.responsible_id and task.finish_rate == 99 %}
+                        <a href="/ocs/task_chek/{{ task.id }}" class="waves-effect yellow lighten-3 black-text btn">
+                            Подтвердить выполнение
+                        </a>
+                    {% else %}
+                        <a class="waves-effect yellow lighten-3 black-text btn disabled">
+                            Подтвердить выполнение
+                        </a>
+                    {% endif %}
+                    <!--Fail-->
+                    {% if user.id == task.responsible_id and task.finish_rate < 100 %}
+                        <a href="/ocs/task_chek/{{ task.id }}" class="waves-effect yellow lighten-3 black-text btn">
+                            Задача провалена
+                        </a>
+                    {% else %}
+                        <a class="waves-effect yellow lighten-3 black-text btn disabled">
+                            Задача провалена
+                        </a>
+                    {% endif %}
+                    </div>
+                {% else %}
+                <!--If task hasn't subtasks-->
+                    <!--Done-->
+                    <div class="card-action">
+                    {% if user.id == task.responsible_id and task.finish_rate < 100 %}
+                        <a href="/ocs/task_chek/{{ task.id }}" class="waves-effect yellow lighten-3 black-text btn">
+                            Выполнил
+                        </a>
+                    {% else %}
+                        <a class="waves-effect yellow lighten-3 black-text btn disabled">
+                            Выполнил
+                        </a>
+                    {% endif %}
+                    <!--Fail-->
+                    {% if user.id == task.responsible_id and task.finish_rate < 100 %}
+                        <a href="/ocs/task_fail/{{ task.id }}" class="waves-effect red lighten-5 black-text btn">
+                            Задача провалена
+                        </a>
+                    {% else %}
+                        <a class="waves-effect yellow lighten-3 black-text btn disabled">
+                            Задача провалена
+                        </a>
+                    {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body_block %}

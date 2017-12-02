@@ -1,5 +1,5 @@
 /* label color */
-.input-field label, .input-field option{
+.input-field label, .input-field option {
     color: #2196f3;
 }
 
@@ -30,23 +30,56 @@
 .input-field .prefix.active {
     color: #2196f3;
 }
-tbody th{
+
+tbody th {
     font-weight: 300;
 }
+
 .last_col {
     min-width: 150px;
 }
-ul:not(.browser-default)>li {
+
+ul:not(.browser-default) > li {
     display: inline;
 }
+
 .body-container {
     margin: 20px;
 }
+
 .manage-btn {
     min-width: 280px;
     margin-left: 10px;
     margin-right: 10px;
 }
+
 .href {
     cursor: pointer;
+}
+
+/*Moris Chat css*/
+.morris-hover {
+    position: absolute;
+    z-index: 1000
+}
+
+.morris-hover.morris-default-style {
+    border-radius: 10px;
+    padding: 6px;
+    color: #666;
+    background: rgba(255, 255, 255, 0.8);
+    border: solid 2px rgba(230, 230, 230, 0.8);
+    font-family: sans-serif;
+    font-size: 12px;
+    text-align: center
+}
+
+.morris-hover.morris-default-style .morris-hover-row-label {
+    font-weight: bold;
+    margin: 0.25em 0
+}
+
+.morris-hover.morris-default-style .morris-hover-point {
+    white-space: nowrap;
+    margin: 0.1em 0
 }

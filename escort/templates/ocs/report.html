@@ -1,0 +1,14 @@
+{% extends 'ocs/base.html' %}
+{% load staticfiles %}
+{% load ocs_extras %}
+
+{% block breadcrumb_block %}
+<a class="breadcrumb">Генерация отчета</a>
+{% endblock breadcrumb_block %}
+
+{% block body_block %}
+<div class="container">
+<h1>Заебошить отчет?</h1>
+    <a href = "{% url 'ocs:report_generate'  %}" class="waves-effect deep-purple darken-4 btn-large">ЗАЕБОШИТЬ</a>
+</div>
+{% endblock body_block %}

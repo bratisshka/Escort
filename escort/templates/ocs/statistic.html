@@ -1,0 +1,96 @@
+{% extends 'ocs/base.html' %}
+{% load staticfiles %}
+{% load ocs_extras %}
+
+{% block breadcrumb_block %}
+<a class="breadcrumb">Статистика</a>
+{% endblock breadcrumb_block %}
+
+{% block body_block %}
+<div class="container">
+    <div class="col s12 m12">
+        <div class="card red lighten-2">
+
+            <div class="card grey lighten-3"> <!--Карта -->
+                <div class="card-content black-text">
+                        <span class="card-title">
+                            Статистика системы контроля работы
+                        </span>
+                </div>
+            </div>
+
+            <div class="row"> <!--диаграмма-->
+                <div class="col s12 m4">
+                    <div class="row">
+                        <div class="col s12 m12">
+                            <div class="card grey lighten-3"> <!--Карта -->
+                                <div class="card-content black-text">
+                                    <p>Система начала свою работу</br>
+                                        4 декабря 2017г.</br>
+                                        С этого момента:
+                                    </p>
+                                    <h5>Поступило задач: {{ tasks|length }}</h5>
+                                    <p>Выполнено в срок: {{ done_task|length }}</p>
+                                    <p>Не выполнено: {{ fail_task|length }}</p>
+                                    <p>На выполнении: {{ work_task|length }}</p>
+                                    <p>Ожидают подтверждения: {{ wait_task|length }}</p>
+                                    <p></p>
+                                    <!--<span class="card-title"></span>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 m12">
+                            <div class="card grey lighten-3"> <!--Карта -->
+                                <div class="card-content black-text">
+                                    <p>В системе зарегистрировано
+                                        <b>{{ users_count }}</b> пользователей,
+                                        из них администраторы: <b>{{ adm_count }}</b>.
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m8">
+                    <div class="card grey lighten-3"> <!--Карта -->
+                        <div class="card-content black-text">
+                            <span class="card-title">Диаграмма выполнения задач</span>
+                            <!--chart dashboard-->
+                            <div id="donat"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 m12">
+                    <div class="card grey lighten-3"> <!--Карта -->
+                        <div class="card-content black-text">
+                            <span class="card-title">Статистика выполнения задач сотрудниками</span>
+                            <!--chart dashboard-->
+                            <div id="bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="card-action">
+
+            </div>-->
+        </div>
+    </div>
+
+</div>
+{% endblock body_block %}
+
+{% block scripts %}
+<script src="{% static 'sod/js/script.js' %}"></script>
+<script src="{% static 'ocs/js/script.js' %}"></script>
+<script src="{% static 'ocs/js/morris/jquery.min.js' %}"></script>
+<script src="{% static 'ocs/js/morris/raphael-min.js' %}"></script>
+<script src="{% static 'ocs/js/morris/morris.js' %}"></script>
+<script src="{% static 'ocs/js/morris/chart.js' %}"></script>
+{% endblock scripts %}

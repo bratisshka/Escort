@@ -15,14 +15,9 @@
                 <div class="card-content white-text">
                     <span class="card-title">{{ user.get_full_name }}</span>
                     <p>
-                        {% if request.user|has_group:"Admins" %}
-                        <span class="white-text email">Системный администратор</span>
-                        {% else %}
-                        <span class="white-text email">Пользователь</span>
-                        {% endif %}
+                        <span class="white-text email">{{ user.email }}</span>
                     </p>
                     <p>id: {{ user.id }}</p>
-                    <p>email: {{ user.email }}</p>
                     <p>Текущих задач: {{ tasks|length }}</p>
                 </div>
             </div>
@@ -79,14 +74,43 @@
                                 <span class="badge">
                                     <a href="/ocs/show_task/{{ task.id }}/" title="Подробнее"><i
                                             class="material-icons">import_contacts</i></a>
-                                    <a href="/ocs/show_task/{{ task.id }}/" title="Отметить как выполненое"><i
-                                            class="material-icons">assignment_turned_in</i></a>
                                 </span>
                             </div>
                             <div class="collapsible-body white">
+                                <!--<h5>
+                                    Описание задачи:
+                                </h5>-->
                                 <span>
-                                    <a href="/ocs/show_task/{{ task.id }}/">{{ task.description }}</a>
+                                    <a href="/ocs/show_task/{{ task.id }}/" class="black-text">
+                                        {{ task.description }}
+                                    </a>
                                 </span>
+                                {% if task.id in ref %}
+                                <!--<h5>
+                                    Подзадачи:
+                                </h5>-->
+                                <div class="collection">
+                                    {% for subt in subtasks %}
+                                    {% if subt.task_id == task.id and subt.is_finished == 1 %}
+                                    <a class="collection-item black-text" title="Выполнено">
+                                        <!--<i class="material-icons">close</i>-->
+                                        {{ subt.name }}
+                                        <i class="secondary-content">
+                                            <i class="material-icons blue-text">assignment_turned_in</i>
+                                        </i>
+                                    </a>
+                                    {% elif subt.task_id == task.id and subt.is_finished == 0 %}
+                                    <a class="collection-item black-text" title="Задача не выполнена">
+                                        <!--<i class="material-icons">close</i>-->
+                                        {{ subt.name }}
+                                        <i class="secondary-content">
+                                            <i class="material-icons blue-text">assignment_late</i>
+                                        </i>
+                                    </a>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
                             </div>
                         </li>
                         {% endfor %}

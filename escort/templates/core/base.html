@@ -69,11 +69,7 @@
             {% if user.is_authenticated %}
                 <img class="circle" src="{% static 'app/images/cat.jpg' %}">
                 <span class="white-text name">{{ user.get_full_name }}</span>
-                {% if request.user|has_group:"Admins" %}
-                    <span class="white-text email">Системный администратор</span>
-                {% else %}
-                    <span class="white-text email">Пользователь</span>
-                {% endif %}
+                <span class="white-text email">{{ user.email }}</span>
             {% else %}
                 <span class="white-text email">Для работы в системе необходима</span>
                 <a href="{% url 'auth_login' %}"><span class="white-text email">авторизация</span></a>

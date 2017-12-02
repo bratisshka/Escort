@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 {% load staticfiles %}
+{% load ocs_extras %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
@@ -17,25 +18,32 @@
         <li>
             <div class="divider"></div>
         </li>
-        <li><a class="waves-effect" href="{% url 'ocs:index' %}"><i class="material-icons">equalizer</i>Статистика</a>
+        <li><a class="waves-effect" href="{% url 'ocs:statistic' %}"><i class="material-icons">equalizer</i>Статистика системы</a>
         </li>
-        <li><a class="waves-effect" href="{% url 'ocs:index' %}"><i class="material-icons">insert_drive_file</i>Генерация
+        {% if request.user|has_group:"Admins" %}
+        <li><a class="waves-effect" href="{% url 'ocs:report' %}"><i class="material-icons">insert_drive_file</i>Генерация
             отчетов</a>
         </li>
+        {% endif %}
         <li>
             <div class="divider"></div>
         </li>
         <li><a class="subheader">Управление задачами</a></li>
         <li><a class="waves-effect" href="{% url 'ocs:task_list' %}"><i class="material-icons">assignment</i>Список
             задач</a></li>
+        {% if request.user|has_group:"Admins" %}
         <li><a class="waves-effect" href="{% url 'ocs:add_task' %}"><i class="material-icons">add</i>Добавить задачу</a>
         </li>
+        {% endif %}
         <li>
             <div class="divider"></div>
         </li>
+        {% if request.user|has_group:"Admins" %}
         <li><a class="subheader">Администрирование</a></li>
+        <li><a class="waves-effect" href="/admin/"><i class="material-icons">build</i>Панель администратора</a>
         <li><a class="waves-effect" href="/ocs/users_list/"><i class="material-icons">group</i>Учетные записи</a>
         </li>
+        {% endif %}
     {% endif %}
 {% endblock %}
 

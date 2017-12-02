@@ -12,11 +12,21 @@
         {% if tasks %}
         {% for task in tasks %}
         <li>
+            {% if task.finish_rate == 100 %}
+            <div class="collapsible-header green lighten-5">
+            {% elif task.finish_rate == 101 %}
+            <div class="collapsible-header red lighten-5">
+            {% elif task.finish_rate == 99 %}
+            <div class="collapsible-header yellow lighten-5">
+            {% else %}
             <div class="collapsible-header">
+            {% endif %}
                 {% if task.finish_rate == 100 %}
                 <i class="material-icons">check</i>
                 {% elif task.finish_rate == 99 %}
                 <i class="material-icons">access_time</i>
+                {% elif task.finish_rate == 101 %}
+                <i class="material-icons">closes</i>
                 {% else %}
                 <i class="material-icons">cached</i>
                 {% endif %}
@@ -25,6 +35,8 @@
                 (выполнено)
                 {% elif task.finish_rate == 99 %}
                 (ожидает подтверждения)
+                {% elif task.finish_rate == 101 %}
+                (задача провалена)
                 {% else %}
                 ({{ task.finish_rate }}%)
                 {% endif %}
@@ -33,7 +45,7 @@
                             class="material-icons">import_contacts</i></a>
                     {% if request.user|has_group:"Admins" %}
                     <a href="/ocs/edit_task/{{ task.id }}/" title="Редактировать задачу"><i class="material-icons">border_color</i></a>
-                    <a href="collapsible.html" title="Удалить задачу"><i class="material-icons">delete_forever</i></a>
+                    <a href="/ocs/delete_task/{{ task.id }}/" title="Удалить задачу"><i class="material-icons">delete_forever</i></a>
                     {% endif %}
                 </span>
             </div>
@@ -41,6 +53,26 @@
                 <span>
                      <a href="/ocs/show_task/{{ task.id }}/" class="black-text">{{ task.description }}</a>
                 </span>
+                {% if task.id in ref %}
+                <!--<h5>
+                    Подзадачи:
+                </h5>-->
+                <ul class="collection">
+                    {% for subt in subtasks %}
+                    {% if subt.task_id == task.id and subt.is_finished == 1 %}
+                        <a class="collection-item black-text">
+                            <i class="material-icons">check</i>
+                            {{ subt.name }}
+                        </a>
+                    {% elif subt.task_id == task.id and subt.is_finished == 0 %}
+                        <a class="collection-item black-text">
+                            <i class="material-icons">close</i>
+                            {{ subt.name }}
+                        </a>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
             </div>
         </li>
         {% endfor %}
