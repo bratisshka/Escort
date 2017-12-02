@@ -8,6 +8,14 @@ class ModuleInlineAdmin(admin.TabularInline):
     extra = 3
 
 # Register your models here.
+# @admin.register(Module)
+# class ModuleAdmin(admin.ModelAdmin):
+#     fields = ('name', 'description', ('periodic', 'timeout', 'state'), 'is_service')
+#     list_display = ['name', 'state', 'purpose', "is_service"]
+#     ordering = ['-is_service', 'name']
+#     #filter_horizontal = ['output_modules']
+#     inlines = (ModuleInlineAdmin,)
+#
 @admin.register(Module)
 class ModuleAdmin(admin.ModelAdmin):
     fields = ('name', 'description', ('periodic', 'timeout', 'state'), 'is_service')
