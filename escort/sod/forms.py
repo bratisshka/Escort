@@ -52,18 +52,16 @@ class ModuleForm(forms.Form):
 
 class FileForm(forms.Form):
     module_choices = list(Module.objects.filter(is_service=False).values_list('id', 'name'))
-    module_choices.append((0, "Входящий поток"))
-    module = forms.ChoiceField(choices=module_choices, initial=0)
+    module = forms.ChoiceField(choices=module_choices, initial=1)
     file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
     def save(self):
-        module_id = self.data.get('module', 0)
-        if module_id == 0:
-            pass
-            # TODO вызвать распределяющий модуль
+        module_id = self.data.get('module', 1)
+        files = self.files.getlist('file_field')
         try:
             mod = Module.objects.get(pk=module_id)
-            files = self.files.getlist('file_field')
-            mod.append_to_input(files)
+            mod.append_to_input(files, to_in=(mod.id != 1))
+            mod.sended_files += len(files)
+            mod.save()
         except Module.DoesNotExist:
             self.add_error(field='module', error='Module does not exist')

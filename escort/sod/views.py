@@ -27,15 +27,21 @@ def exe(request):
     return render(request, 'sod/exe.html')
 
 
+@login_required
 def add_files(request):
     form = FileForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
-        form.save()
-        form = FileForm
+        if form.data['module'] != 0:
+            module = get_object_or_404(Module, pk=form.data['module'])
+            form.save()
+            return redirect(module.get_absolute_url())
+        else:
+            form.save()
     return render(request, 'sod/add_files.html', {'form': form})
 
 
 class AddFilesToModuleView(View):
+    @login_required
     def post(self, request):
         form = FileForm(request.POST, request.FILES)
         form.save()
@@ -50,6 +56,7 @@ class AddModuleView(View):
         form = self.form_class(initial=None)
         return render(request, self.template_name, {'form': form})
 
+    @login_required
     def post(self, request):
         form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
@@ -58,6 +65,7 @@ class AddModuleView(View):
         return render(request, self.template_name, {'form': form})
 
 
+@login_required
 def run_module(request, pk):
     module = get_object_or_404(Module, pk=pk)
     if module.state == module.STOPPED:
@@ -65,7 +73,7 @@ def run_module(request, pk):
     return redirect(module.get_absolute_url())
 
 
-# @login_required
+@login_required
 @require_POST
 def clear_module_input_dir(request, pk):
     module = get_object_or_404(Module, pk=pk)
@@ -73,6 +81,7 @@ def clear_module_input_dir(request, pk):
     return HttpResponse("Очищено")
 
 
+@login_required
 @require_POST
 def clear_module_output_dir(request, pk):
     module = get_object_or_404(Module, pk=pk)
@@ -80,15 +89,17 @@ def clear_module_output_dir(request, pk):
     return HttpResponse("Очищено")
 
 
+@login_required
 def show_module_directory(request, pk):  # NOT WORKING
     module = get_object_or_404(Module, pk=pk)
     filelist = os.listdir(str(module.get_module_directory()))
     context = {
-        "filelist": filelist
+        "data": "\n".join(filelist)
     }
-    return render_to_response('sod/show_module_dir.html', context)
+    return JsonResponse(context)
 
 
+@login_required()
 def download_out_zip(request, pk):
     from wsgiref.util import FileWrapper
 
@@ -124,12 +135,22 @@ class ModuleView(DetailView):
         return context
 
 
+def module_view(request, pk):
+    module = get_object_or_404(Module, pk=pk)
+    if module.id == 1:
+        return redirect('/sod/')
+    else:
+        return render(request, 'sod/module_detail.html', {'module': module})
+
+
+@login_required
 def show_log(request, pk):
     mod = get_object_or_404(Module, pk=pk)
     log = mod.show_log_file()
     return JsonResponse({"data": log})
 
 
+@login_required
 def show_out(request, pk):
     mod = get_object_or_404(Module, pk=pk)
     out = mod.show_output_file()

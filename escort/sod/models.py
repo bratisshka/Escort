@@ -49,6 +49,7 @@ class Module(models.Model):
                                             blank=True,
                                             related_name='input_modules')
     is_service = models.BooleanField(default=False, verbose_name="Служебный?")
+    last_executed = models.DateTimeField(auto_now_add=True, verbose_name="Последний запуск")
 
     class Meta:
         verbose_name = "модуль"
@@ -115,8 +116,11 @@ class Module(models.Model):
     def running(self):
         return self.state == self.RUNNING
 
-    def append_to_input(self, files):
-        input_dir = str(self.get_module_directory() / 'in')
+    def append_to_input(self, files, to_in=True):
+        if to_in:
+            input_dir = str(self.get_module_directory() / 'in')
+        else:
+            input_dir = str(self.get_module_directory())
         for file in files:
             with open(os.path.join(input_dir, str(file)), 'wb') as destination:
                 for chunk in file.chunks():
@@ -142,7 +146,6 @@ class Module(models.Model):
 class Dependancy(models.Model):
     input_module = models.ForeignKey(Module, related_name='+')
     output_module = models.ForeignKey(Module, related_name='+')
-
 
     # class ServiceModule(models.Model):
     #     """
