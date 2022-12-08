@@ -1,5 +1,5 @@
 argh==0.26.2
-certifi==2017.7.27.1
+certifi==2022.12.7
 chardet==3.0.4
 Django==1.11.6
 idna==2.6
